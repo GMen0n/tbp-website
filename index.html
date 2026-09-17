@@ -695,11 +695,63 @@
             background: #000;
         }
 
-        .spotify-wrap iframe {
-            display: block;
+        .main-episode-card {
+            display: flex;
+            flex-direction: column;
+            background: #000;
+            border-radius: 12px;
+            overflow: hidden;
+            height: 100%;
+            text-decoration: none;
+            color: inherit;
+            border: 1px solid var(--border);
+            transition: transform 0.2s ease, border-color 0.2s ease;
+        }
+        
+        .main-episode-card:hover {
+            transform: translateY(-4px);
+            border-color: var(--accent-green);
+        }
+
+        .main-episode-img {
             width: 100%;
-            height: 420px;
-            border: none;
+            aspect-ratio: 16 / 9;
+            object-fit: cover;
+            border-bottom: 2px solid var(--accent-green);
+        }
+
+        .main-episode-content {
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+        }
+
+        .main-ep-title {
+            font-size: 20px;
+            font-weight: 700;
+            margin: 8px 0;
+            color: #fff;
+        }
+
+        .main-ep-desc {
+            color: var(--text-muted);
+            font-size: 14px;
+            line-height: 1.5;
+            margin-bottom: 24px;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        
+        .main-ep-meta {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 12px;
+            letter-spacing: 0.1em;
+            color: var(--accent-green);
+            text-transform: uppercase;
+            margin-bottom: 8px;
         }
 
         .episode-card {
@@ -1332,43 +1384,12 @@
 
                 <div class="listen-grid" id="listen-grid">
 
-                    <div class="spotify-wrap reveal" id="spotify-embed-wrap">
-                        <iframe id="spotify-iframe" title="Tech Buddies — Podcast on Spotify"
-                            src="https://open.spotify.com/embed/show/4W8ngOJrf2Sw7nZVWzZI4H?utm_source=generator&amp;theme=0"
-                            loading="lazy"
-                            allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe>
+                    <div id="main-episode-wrap" class="reveal">
+                        <!-- Main episode injected via JS -->
                     </div>
 
-                    <!-- REPLACE: episode titles and dates below with real podcast episode data -->
+                    <!-- Dynamic episodes injected via JS -->
                     <div class="episodes-stack" id="episodes-stack" data-stagger>
-                        <a class="episode-card reveal" id="episode-1"
-                            href="https://open.spotify.com/show/4W8ngOJrf2Sw7nZVWzZI4H" target="_blank" rel="noopener"
-                            aria-label="Listen to Episode 1 on Spotify">
-                            <span class="ep-label">EP 01</span>
-                            <h3 class="ep-title">The EV Revolution in India — Are We Ready?</h3>
-                            <span class="ep-date">Sep 2026</span>
-                        </a>
-                        <a class="episode-card reveal" id="episode-2"
-                            href="https://open.spotify.com/show/4W8ngOJrf2Sw7nZVWzZI4H" target="_blank" rel="noopener"
-                            aria-label="Listen to Episode 2 on Spotify">
-                            <span class="ep-label">EP 02</span>
-                            <h3 class="ep-title">Budget Phones That Actually Beat Flagships</h3>
-                            <span class="ep-date">Aug 2026</span>
-                        </a>
-                        <a class="episode-card reveal" id="episode-3"
-                            href="https://open.spotify.com/show/4W8ngOJrf2Sw7nZVWzZI4H" target="_blank" rel="noopener"
-                            aria-label="Listen to Episode 3 on Spotify">
-                            <span class="ep-label">EP 03</span>
-                            <h3 class="ep-title">SUVs Under 15 Lakhs — Best Picks of 2026</h3>
-                            <span class="ep-date">Aug 2026</span>
-                        </a>
-                        <a class="episode-card reveal" id="episode-4"
-                            href="https://open.spotify.com/show/4W8ngOJrf2Sw7nZVWzZI4H" target="_blank" rel="noopener"
-                            aria-label="Listen to Episode 4 on Spotify">
-                            <span class="ep-label">EP 04</span>
-                            <h3 class="ep-title">Apple vs Android — An Indian Buyer's Take</h3>
-                            <span class="ep-date">Jul 2026</span>
-                        </a>
                     </div>
 
                 </div>
@@ -1675,6 +1696,71 @@
                     }
                 })
                 .catch(err => console.error('Error fetching YouTube RSS:', err));
+        });
+    </script>
+
+    <!-- Podcast Fetch Script -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const PODCAST_RSS_URL = 'https://anchor.fm/s/570ada28/podcast/rss';
+            const PODCAST_API_URL = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(PODCAST_RSS_URL)}`;
+
+            fetch(PODCAST_API_URL)
+                .then(res => res.json())
+                .then(data => {
+                    if (data.status === 'ok' && data.items.length > 0) {
+                        const episodes = data.items;
+                        
+                        // 1. Update Main Episode (First Item)
+                        const latest = episodes[0];
+                        const mainWrap = document.getElementById('main-episode-wrap');
+                        
+                        const dateObj = new Date(latest.pubDate);
+                        const month = dateObj.toLocaleString('default', { month: 'short' });
+                        const year = dateObj.getFullYear();
+                        const dateStr = `${month} ${year}`;
+
+                        const tempDiv = document.createElement('div');
+                        tempDiv.innerHTML = latest.description;
+                        const textDesc = tempDiv.textContent || tempDiv.innerText || "";
+                        
+                        if (mainWrap) {
+                            mainWrap.innerHTML = `
+                                <a href="${latest.link}" target="_blank" rel="noopener" class="main-episode-card" aria-label="Listen to latest episode">
+                                    <img src="${latest.thumbnail}" alt="Episode thumbnail" class="main-episode-img">
+                                    <div class="main-episode-content">
+                                        <span class="main-ep-meta">LATEST EPISODE &bull; ${dateStr}</span>
+                                        <h3 class="main-ep-title">${latest.title}</h3>
+                                        <p class="main-ep-desc">${textDesc}</p>
+                                    </div>
+                                </a>
+                            `;
+                        }
+
+                        // 2. Update Side Cards (Next 4 Items)
+                        const stackWrap = document.getElementById('episodes-stack');
+                        if (stackWrap) {
+                            let stackHTML = '';
+                            for (let i = 1; i <= 4 && i < episodes.length; i++) {
+                                const ep = episodes[i];
+                                const epDateObj = new Date(ep.pubDate);
+                                const epMonth = epDateObj.toLocaleString('default', { month: 'short' });
+                                const epYear = epDateObj.getFullYear();
+                                const epDateStr = `${epMonth} ${epYear}`;
+                                
+                                stackHTML += `
+                                    <a class="episode-card" href="${ep.link}" target="_blank" rel="noopener" aria-label="Listen to ${ep.title}">
+                                        <span class="ep-label">EP 0${i}</span>
+                                        <h3 class="ep-title">${ep.title}</h3>
+                                        <span class="ep-date">${epDateStr}</span>
+                                    </a>
+                                `;
+                            }
+                            stackWrap.innerHTML = stackHTML;
+                        }
+                    }
+                })
+                .catch(err => console.error('Error fetching Podcast RSS:', err));
         });
     </script>
 </body>
