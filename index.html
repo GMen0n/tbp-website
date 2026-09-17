@@ -1,0 +1,1645 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>TBP — The Buyer's Perspective</title>
+    <meta name="description"
+        content="India's honest auto and tech reviews. The buyer's take on cars, bikes and tech — YouTube channel and podcast by The Buyer's Perspective.">
+
+    <link rel="icon"
+        href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2064%2064'%3E%3Crect%20width='64'%20height='64'%20rx='14'%20fill='%230F0F0F'/%3E%3Ctext%20x='32'%20y='45'%20font-family='Arial,sans-serif'%20font-size='34'%20font-weight='900'%20fill='%23FFFFFF'%20text-anchor='middle'%3ET%3C/text%3E%3C/svg%3E">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,400;0,500;0,600;1,400&family=Playfair+Display:ital,wght@0,700;1,700&family=Space+Grotesk:wght@400;600;700;800&display=swap"
+        rel="stylesheet">
+
+    <style>
+        /* ==========================================================
+       DESIGN TOKENS
+       ========================================================== */
+        :root {
+            --bg-base: #0F0F0F;
+            --bg-card: #1A1A1A;
+            --bg-card-hover: #222222;
+            --bg-footer: #0A0A0A;
+            --text-primary: #FFFFFF;
+            --text-secondary: #A0A0A0;
+            --border: #2A2A2A;
+            --accent-red: #E8002D;
+            /* YouTube section   */
+            --accent-green: #1DB954;
+            /* Podcast section   */
+            --accent-blue: #1AABFF;
+            /* Review form section */
+            --red-hover: #C0001F;
+        }
+
+        /* ==========================================================
+       RESET & BASE
+       ========================================================== */
+        *,
+        *::before,
+        *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            scroll-padding-top: 84px;
+            /* keep anchored sections clear of the fixed navbar */
+            overflow-x: hidden;
+        }
+
+        body {
+            background: var(--bg-base);
+            color: var(--text-primary);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            -webkit-font-smoothing: antialiased;
+            text-rendering: optimizeLegibility;
+            overflow-x: hidden;
+        }
+
+        img {
+            max-width: 100%;
+            display: block;
+        }
+
+        button {
+            font: inherit;
+        }
+
+        ::selection {
+            background: var(--accent-red);
+            color: #FFFFFF;
+        }
+
+        a:focus-visible,
+        button:focus-visible {
+            outline: 2px solid var(--accent-blue);
+            outline-offset: 3px;
+            border-radius: 2px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        .section {
+            padding: 100px 0;
+        }
+
+        /* ==========================================================
+       SCROLL-REVEAL UTILITIES
+       (.reveal handles the entrance; .revealed hands transitions
+        back to components so hover states stay snappy)
+       ========================================================== */
+        .reveal {
+            opacity: 0;
+            transform: translateY(24px);
+        }
+
+        .reveal:not(.revealed) {
+            transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* ==========================================================
+       WORDMARK (RGB drop-shadow treatment)
+       ========================================================== */
+        .wordmark {
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 800;
+            font-size: 28px;
+            line-height: 1;
+            color: var(--text-primary);
+            text-decoration: none;
+            text-shadow: -2px -2px 0 var(--accent-red), 2px 2px 0 var(--accent-blue), 0 2px 0 var(--accent-green);
+        }
+
+        .wordmark-footer {
+            font-size: 32px;
+        }
+
+        /* ==========================================================
+       BUTTONS
+       ========================================================== */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 13px;
+            font-weight: 600;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            text-decoration: none;
+            cursor: pointer;
+            border: 0;
+            border-radius: 6px;
+            padding: 14px 28px;
+            transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease, filter 0.2s ease;
+        }
+
+        .btn svg {
+            flex: none;
+        }
+
+        .btn-red {
+            background: var(--accent-red);
+            color: #FFFFFF;
+        }
+
+        .btn-red:hover {
+            background: var(--red-hover);
+        }
+
+        .btn-outline {
+            border: 1.5px solid #FFFFFF;
+            color: #FFFFFF;
+            background: transparent;
+        }
+
+        .btn-outline:hover {
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        .btn-outline-red {
+            border: 1.5px solid var(--accent-red);
+            color: var(--accent-red);
+            background: transparent;
+            padding: 14px 32px;
+        }
+
+        .btn-outline-red:hover {
+            background: var(--accent-red);
+            color: #FFFFFF;
+        }
+
+        .btn-green {
+            background: var(--accent-green);
+            color: #000000;
+        }
+
+        .btn-green:hover {
+            filter: brightness(1.1);
+        }
+
+        /* ==========================================================
+       1. NAVBAR
+       ========================================================== */
+        .site-nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: var(--bg-base);
+            border-bottom: 1px solid var(--border);
+            transition: background-color 0.3s ease;
+        }
+
+        .site-nav.scrolled {
+            background: rgba(15, 15, 15, 0.85);
+            -webkit-backdrop-filter: blur(12px);
+            backdrop-filter: blur(12px);
+        }
+
+        .nav-inner {
+            max-width: 1320px;
+            margin: 0 auto;
+            padding: 0 24px;
+            height: 72px;
+            display: grid;
+            grid-template-columns: 1fr auto 1fr;
+            align-items: center;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 32px;
+            justify-self: center;
+        }
+
+        .nav-link {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 13px;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--text-secondary);
+            text-decoration: none;
+            padding: 6px 2px 8px;
+            border-bottom: 2px solid transparent;
+            transition: color 0.2s ease, border-color 0.2s ease;
+        }
+
+        .nav-link--red:hover,
+        .nav-link--red:focus-visible {
+            color: #FFFFFF;
+            border-bottom-color: var(--accent-red);
+        }
+
+        .nav-link--green:hover,
+        .nav-link--green:focus-visible {
+            color: #FFFFFF;
+            border-bottom-color: var(--accent-green);
+        }
+
+        .nav-link--blue:hover,
+        .nav-link--blue:focus-visible {
+            color: #FFFFFF;
+            border-bottom-color: var(--accent-blue);
+        }
+
+        .nav-cta {
+            justify-self: end;
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: #FFFFFF;
+            text-decoration: none;
+            background: transparent;
+            border: 1.5px solid #FFFFFF;
+            border-radius: 100px;
+            padding: 10px 22px;
+            white-space: nowrap;
+            transition: background-color 0.2s ease, color 0.2s ease;
+        }
+
+        .nav-cta:hover {
+            background: #FFFFFF;
+            color: var(--bg-base);
+        }
+
+        .hamburger {
+            display: none;
+            justify-self: end;
+            background: none;
+            border: 0;
+            color: #FFFFFF;
+            cursor: pointer;
+            padding: 8px;
+        }
+
+        /* ---- Mobile drawer ---- */
+        .drawer-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.6);
+            z-index: 1100;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+
+        .drawer-overlay.open {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .mobile-drawer {
+            position: fixed;
+            top: 0;
+            right: 0;
+            height: 100vh;
+            height: 100dvh;
+            width: 280px;
+            max-width: 85vw;
+            background: var(--bg-card);
+            border-left: 1px solid var(--border);
+            z-index: 1200;
+            transform: translateX(100%);
+            visibility: hidden;
+            transition: transform 0.3s ease, visibility 0s linear 0.3s;
+            display: flex;
+            flex-direction: column;
+            gap: 36px;
+            padding: 24px;
+        }
+
+        .mobile-drawer.open {
+            transform: translateX(0);
+            visibility: visible;
+            transition: transform 0.3s ease;
+        }
+
+        .drawer-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .drawer-close {
+            background: none;
+            border: 0;
+            color: var(--text-secondary);
+            cursor: pointer;
+            padding: 8px;
+            display: inline-flex;
+            transition: color 0.2s ease;
+        }
+
+        .drawer-close:hover {
+            color: #FFFFFF;
+        }
+
+        .drawer-links {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .drawer-link {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 14px;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--text-secondary);
+            text-decoration: none;
+            padding: 16px 4px;
+            border-bottom: 1px solid var(--border);
+            transition: color 0.2s ease, border-color 0.2s ease;
+        }
+
+        .drawer-link:hover {
+            color: #FFFFFF;
+        }
+
+        #drawer-link-watch:hover {
+            border-bottom-color: var(--accent-red);
+        }
+
+        #drawer-link-listen:hover {
+            border-bottom-color: var(--accent-green);
+        }
+
+        #drawer-link-connect:hover {
+            border-bottom-color: var(--accent-blue);
+        }
+
+        .drawer-cta {
+            margin-top: auto;
+        }
+
+        /* ==========================================================
+       2. HERO
+       ========================================================== */
+        .hero {
+            min-height: 100vh;
+            min-height: 100svh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            text-align: center;
+            padding: 120px 24px 96px;
+            background: var(--bg-base);
+        }
+
+        .hero-inner {
+            max-width: 900px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .hero-chip {
+            display: inline-flex;
+            align-items: center;
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 11px;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--accent-red);
+            border-left: 3px solid var(--accent-red);
+            padding: 3px 0 3px 8px;
+        }
+
+        .hero-title {
+            margin-top: 28px;
+            font-size: clamp(52px, 8vw, 96px);
+            line-height: 1.04;
+        }
+
+        .hero-line-1 {
+            display: block;
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
+            font-weight: 700;
+            color: #FFFFFF;
+        }
+
+        .hero-line-2 {
+            display: inline-block;
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 800;
+            color: #FFFFFF;
+            letter-spacing: 0.01em;
+            border-bottom: 3px solid var(--accent-red);
+            padding-bottom: 8px;
+            margin-top: 8px;
+        }
+
+        .hero-sub {
+            font-size: 18px;
+            color: var(--text-secondary);
+            max-width: 480px;
+            margin: 28px auto 40px;
+        }
+
+        .hero-ctas {
+            display: flex;
+            justify-content: center;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .scroll-indicator {
+            position: absolute;
+            bottom: 32px;
+            left: calc(50% - 20px);
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-secondary);
+            transition: color 0.2s ease;
+        }
+
+        .scroll-indicator:hover {
+            color: #FFFFFF;
+        }
+
+        /* ==========================================================
+       3. LATEST VIDEO STRIP
+       ========================================================== */
+        .latest {
+            padding: 100px 0;
+            background: linear-gradient(180deg, #0F0F0F 0%, #141414 100%);
+        }
+
+        .section-label {
+            display: inline-flex;
+            align-items: center;
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 11px;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--accent-red);
+            border-left: 3px solid var(--accent-red);
+            padding: 3px 0 3px 8px;
+            margin-bottom: 40px;
+        }
+
+        .latest-grid {
+            display: grid;
+            grid-template-columns: 3fr 2fr;
+            /* 60 / 40 */
+            gap: 48px;
+            align-items: center;
+        }
+
+        .latest-video {
+            aspect-ratio: 16 / 9;
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid var(--border);
+            box-shadow: 0 0 40px rgba(232, 0, 45, 0.08);
+            background: #000;
+        }
+
+        .latest-video iframe {
+            width: 100%;
+            height: 100%;
+            border: 0;
+            display: block;
+        }
+
+        .micro-label {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 10px;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: var(--text-secondary);
+        }
+
+        .latest-title {
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
+            font-weight: 700;
+            font-size: 32px;
+            line-height: 1.3;
+            color: #FFFFFF;
+            margin-top: 12px;
+        }
+
+        .latest-desc {
+            font-size: 16px;
+            line-height: 1.7;
+            color: var(--text-secondary);
+            margin-top: 16px;
+        }
+
+        .text-link {
+            display: inline-block;
+            margin-top: 24px;
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 13px;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: var(--accent-red);
+            text-decoration: none;
+        }
+
+        .text-link:hover {
+            text-decoration: underline;
+        }
+
+        /* ==========================================================
+       SECTION HEADER ROW (Watch / Podcast)
+       ========================================================== */
+        .section-head {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+            margin-bottom: 48px;
+        }
+
+        .section-title {
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 800;
+            font-size: 48px;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            color: #FFFFFF;
+        }
+
+        .head-rule {
+            flex: 1;
+            min-width: 32px;
+            border: 0;
+            border-top: 1px solid var(--accent-red);
+            opacity: 0.6;
+        }
+
+        .head-rule--green {
+            border-top-color: var(--accent-green);
+        }
+
+        /* ==========================================================
+       4. YOUTUBE SECTION
+       ========================================================== */
+        .watch-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+        }
+
+        .video-card {
+            display: block;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            overflow: hidden;
+            cursor: pointer;
+            text-decoration: none;
+            transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .video-card:hover {
+            transform: translateY(-4px);
+            border-color: var(--accent-red);
+            box-shadow: 0 8px 32px rgba(232, 0, 45, 0.12);
+        }
+
+        .video-thumb {
+            position: relative;
+            background: #000;
+        }
+
+        .video-thumb img {
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            object-fit: cover;
+        }
+
+        .duration-badge {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            background: rgba(0, 0, 0, 0.85);
+            color: #FFFFFF;
+            font-size: 12px;
+            font-weight: 500;
+            padding: 4px 8px;
+            border-radius: 4px;
+        }
+
+        .card-body {
+            padding: 16px;
+        }
+
+        .card-title {
+            font-size: 15px;
+            font-weight: 600;
+            line-height: 1.45;
+            color: #FFFFFF;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            margin-bottom: 8px;
+        }
+
+        .card-meta {
+            font-size: 13px;
+            color: var(--text-secondary);
+        }
+
+        .center-cta {
+            text-align: center;
+            margin-top: 48px;
+        }
+
+        /* ==========================================================
+       5. PODCAST SECTION
+       ========================================================== */
+        .listen {
+            background: #111111;
+        }
+
+        .listen-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 48px;
+            align-items: start;
+        }
+
+        .spotify-wrap {
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            overflow: hidden;
+            background: #000;
+        }
+
+        .spotify-wrap iframe {
+            display: block;
+            width: 100%;
+            height: 420px;
+            border: none;
+        }
+
+        .episode-card {
+            display: block;
+            background: var(--bg-card);
+            border-left: 4px solid var(--accent-green);
+            border-radius: 0 8px 8px 0;
+            padding: 16px 20px;
+            margin-bottom: 12px;
+            text-decoration: none;
+            cursor: pointer;
+            transition: transform 0.2s ease, background-color 0.2s ease;
+        }
+
+        .episode-card:last-child {
+            margin-bottom: 0;
+        }
+
+        .episode-card:hover {
+            transform: translateY(-2px);
+            background: var(--bg-card-hover);
+        }
+
+        .ep-label {
+            display: block;
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 10px;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--accent-green);
+            margin-bottom: 6px;
+        }
+
+        .ep-title {
+            font-size: 15px;
+            font-weight: 600;
+            line-height: 1.5;
+            color: #FFFFFF;
+        }
+
+        .ep-date {
+            display: block;
+            font-size: 13px;
+            color: var(--text-secondary);
+            margin-top: 4px;
+        }
+
+        .podcast-ctas {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 16px;
+            flex-wrap: wrap;
+            margin-top: 48px;
+        }
+
+        /* ==========================================================
+       6. REVIEW FORM SECTION
+       ========================================================== */
+        .review-head {
+            text-align: center;
+        }
+
+        .review-line-1 {
+            display: block;
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
+            font-weight: 700;
+            font-size: clamp(40px, 6vw, 72px);
+            line-height: 1.12;
+            color: #FFFFFF;
+        }
+
+        .review-line-2 {
+            display: block;
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 800;
+            font-size: clamp(40px, 6vw, 72px);
+            line-height: 1.18;
+            color: var(--accent-blue);
+        }
+
+        .review-sub {
+            font-size: 16px;
+            line-height: 1.7;
+            color: var(--text-secondary);
+            max-width: 480px;
+            margin: 24px auto 0;
+        }
+
+        .review-form {
+            max-width: 600px;
+            margin: 48px auto 0;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+
+        .form-field label {
+            display: block;
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--text-secondary);
+            margin-bottom: 6px;
+        }
+
+        .form-field input,
+        .form-field textarea {
+            width: 100%;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            color: #FFFFFF;
+            border-radius: 8px;
+            padding: 14px 16px;
+            font-family: 'Inter', sans-serif;
+            font-size: 15px;
+            box-sizing: border-box;
+            transition: border-color 0.2s ease;
+        }
+
+        .form-field input:focus,
+        .form-field textarea:focus {
+            border-color: var(--accent-blue);
+            outline: none;
+        }
+
+        .form-field textarea {
+            resize: vertical;
+            min-height: 112px;
+            line-height: 1.6;
+        }
+
+        .form-field input::placeholder,
+        .form-field textarea::placeholder {
+            color: #7A7A7A;
+            opacity: 1;
+        }
+
+        .review-form input:-webkit-autofill,
+        .review-form input:-webkit-autofill:hover,
+        .review-form input:-webkit-autofill:focus {
+            -webkit-box-shadow: 0 0 0 1000px var(--bg-card) inset;
+            -webkit-text-fill-color: #FFFFFF;
+        }
+
+        .form-error {
+            font-size: 14px;
+            color: #FF5C74;
+        }
+
+        .submit-btn {
+            width: 100%;
+            background: var(--accent-blue);
+            color: #000000;
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 14px;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            padding: 16px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: filter 0.2s ease, opacity 0.2s ease;
+        }
+
+        .submit-btn:hover {
+            filter: brightness(1.1);
+        }
+
+        .submit-btn:disabled {
+            opacity: 0.6;
+            cursor: default;
+            filter: none;
+        }
+
+        .form-success {
+            font-size: 20px;
+            color: #FFFFFF;
+            text-align: center;
+            padding: 56px 0;
+        }
+
+        /* ==========================================================
+       7. FOOTER
+       ========================================================== */
+        .site-footer {
+            background: var(--bg-footer);
+            border-top: 1px solid var(--border);
+        }
+
+        .footer-inner {
+            padding: 60px 24px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 24px;
+            text-align: center;
+        }
+
+        .social-row {
+            display: flex;
+            align-items: center;
+            gap: 28px;
+        }
+
+        .social-link {
+            display: inline-flex;
+            color: var(--text-secondary);
+            transition: color 0.2s ease, transform 0.2s ease;
+        }
+
+        .social-link:hover {
+            transform: translateY(-2px);
+        }
+
+        #footer-youtube:hover {
+            color: var(--accent-red);
+        }
+
+        #footer-spotify:hover {
+            color: var(--accent-green);
+        }
+
+        #footer-instagram:hover {
+            color: #E1306C;
+        }
+
+        #footer-apple:hover {
+            color: #FC3C44;
+        }
+
+        #footer-email:hover {
+            color: var(--accent-blue);
+        }
+
+        .footer-tagline {
+            font-style: italic;
+            font-size: 16px;
+            color: var(--text-secondary);
+        }
+
+        /* Copyright lifted from the briefed #555555 to #7A7A7A — visually identical
+       on #0A0A0A, but passes WCAG AA (4.5:1) for small text. */
+        .footer-copy {
+            font-size: 12px;
+            color: #7A7A7A;
+        }
+
+        /* ==========================================================
+       ANIMATIONS
+       ========================================================== */
+        /* Hero text entrance */
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero-chip {
+            animation: fadeUp 0.6s ease-out both;
+        }
+
+        .hero-line-1 {
+            animation: fadeUp 0.6s ease-out both;
+        }
+
+        .hero-line-2 {
+            animation: fadeUp 0.6s ease-out 0.15s both;
+        }
+
+        .hero-sub {
+            animation: fadeUp 0.6s ease-out 0.3s both;
+        }
+
+        .hero-ctas {
+            animation: fadeUp 0.6s ease-out 0.45s both;
+        }
+
+        /* Scroll bounce indicator */
+        @keyframes bounce {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(8px);
+            }
+        }
+
+        .scroll-indicator {
+            animation: bounce 1.5s ease-in-out infinite;
+        }
+
+        /* ==========================================================
+       RESPONSIVE
+       ========================================================== */
+        /* Tablet: 768px–1024px */
+        @media (max-width: 1024px) {
+            .watch-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .listen-grid {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+
+            .section-title {
+                font-size: 36px;
+            }
+
+            .latest-grid {
+                gap: 36px;
+            }
+        }
+
+        /* Mobile: < 768px */
+        @media (max-width: 768px) {
+            .section {
+                padding: 60px 0;
+            }
+
+            .latest {
+                padding: 60px 0;
+            }
+
+            .watch-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .latest-grid {
+                grid-template-columns: 1fr;
+                gap: 32px;
+            }
+
+            .latest-title {
+                font-size: 26px;
+            }
+
+            .section-head {
+                gap: 16px;
+                margin-bottom: 36px;
+            }
+
+            .section-title {
+                font-size: 30px;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            .nav-links,
+            .nav-cta {
+                display: none;
+            }
+
+            .hamburger {
+                display: inline-flex;
+            }
+
+            .hero {
+                padding: 110px 20px 90px;
+            }
+
+            .hero-sub {
+                font-size: 16px;
+            }
+        }
+
+        /* Small phones: keep the display type from overflowing */
+        @media (max-width: 520px) {
+            .hero-title {
+                font-size: clamp(32px, 11.5vw, 52px);
+            }
+
+            .review-line-1,
+            .review-line-2 {
+                font-size: clamp(24px, 9vw, 40px);
+            }
+        }
+
+        /* Reduced motion */
+        @media (prefers-reduced-motion: reduce) {
+            html {
+                scroll-behavior: auto;
+            }
+
+            .hero-chip,
+            .hero-line-1,
+            .hero-line-2,
+            .hero-sub,
+            .hero-ctas,
+            .scroll-indicator {
+                animation: none;
+            }
+
+            .reveal {
+                opacity: 1;
+                transform: none;
+                transition: none;
+            }
+
+            .video-card,
+            .episode-card,
+            .social-link {
+                transition: none;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- ======================================================================
+       PLACEHOLDER GUIDE — search & replace these before going live:
+       • PLACEHOLDER_VIDEO_ID_1  → latest YouTube video ID (embed, card 3)
+       • PLACEHOLDER_VIDEO_ID_2  → featured video 1 ID (card 1)
+       • PLACEHOLDER_VIDEO_ID_3  → featured video 2 ID (card 2)
+       • PLACEHOLDER_FORM_ID     → Formspree form ID (formspree.io)
+       • tbp@example.com         → real contact email
+       • https://podcasts.apple.com → real Apple Podcasts show URL
+       • Episode titles/dates    → real podcast episode data
+       ====================================================================== -->
+
+    <noscript>
+        <style>
+            .reveal {
+                opacity: 1;
+                transform: none;
+            }
+        </style>
+    </noscript>
+
+    <!-- ==========================================================
+       1. NAVBAR
+       ========================================================== -->
+    <nav class="site-nav" id="site-nav" aria-label="Main navigation">
+        <div class="nav-inner">
+            <a href="#hero" id="nav-logo" class="wordmark">Tbp</a>
+
+            <div class="nav-links">
+                <a href="#watch" id="nav-link-watch" class="nav-link nav-link--red">Watch</a>
+                <a href="#listen" id="nav-link-listen" class="nav-link nav-link--green">Listen</a>
+                <a href="#review" id="nav-link-connect" class="nav-link nav-link--blue">Connect</a>
+            </div>
+
+            <a href="#review" id="nav-cta" class="nav-cta">Want Us to Review Your Car?</a>
+
+            <button class="hamburger" id="hamburger-btn" aria-label="Open menu" aria-expanded="false"
+                aria-controls="mobile-drawer">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" aria-hidden="true">
+                    <path d="M4 6h16M4 12h16M4 18h16" />
+                </svg>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Mobile drawer -->
+    <div class="drawer-overlay" id="drawer-overlay"></div>
+    <aside class="mobile-drawer" id="mobile-drawer" aria-label="Mobile menu" aria-hidden="true">
+        <div class="drawer-top">
+            <a href="#hero" id="drawer-logo" class="wordmark">Tbp</a>
+            <button class="drawer-close" id="drawer-close" aria-label="Close menu">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" aria-hidden="true">
+                    <path d="M5 5l14 14M19 5L5 19" />
+                </svg>
+            </button>
+        </div>
+        <nav class="drawer-links" aria-label="Mobile navigation">
+            <a href="#watch" id="drawer-link-watch" class="drawer-link">Watch</a>
+            <a href="#listen" id="drawer-link-listen" class="drawer-link">Listen</a>
+            <a href="#review" id="drawer-link-connect" class="drawer-link">Connect</a>
+        </nav>
+        <a href="#review" id="drawer-cta" class="nav-cta drawer-cta">Want Us to Review Your Car?</a>
+    </aside>
+
+    <main>
+
+        <!-- ==========================================================
+         2. HERO
+         ========================================================== -->
+        <header class="hero" id="hero">
+            <div class="hero-inner">
+                <span class="hero-chip" id="hero-chip">India's Real Auto &amp; Tech Reviews</span>
+                <h1 class="hero-title">
+                    <span class="hero-line-1">THE BUYER'S</span>
+                    <span class="hero-line-2">PERSPECTIVE</span>
+                </h1>
+                <p class="hero-sub">The buyer's take on cars, bikes &amp; tech in India</p>
+                <div class="hero-ctas">
+                    <a href="https://www.youtube.com/@tbp-ag/videos" target="_blank" rel="noopener"
+                        id="hero-cta-youtube" class="btn btn-red">Watch on YouTube</a>
+                    <a href="https://open.spotify.com/show/4W8ngOJrf2Sw7nZVWzZI4H" target="_blank" rel="noopener"
+                        id="hero-cta-podcast" class="btn btn-outline">Listen to Podcast</a>
+                </div>
+            </div>
+            <a href="#latest" id="scroll-indicator" class="scroll-indicator"
+                aria-label="Scroll down to the latest video">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="m5 9 7 7 7-7" />
+                </svg>
+            </a>
+        </header>
+
+        <!-- ==========================================================
+         3. LATEST VIDEO STRIP
+         ========================================================== -->
+        <section class="latest" id="latest">
+            <div class="container" data-stagger>
+                <span class="section-label reveal">Latest Drop</span>
+
+                <div class="latest-grid reveal" id="latest-grid">
+                    <div class="latest-video" id="latest-video-wrap">
+                        <!-- REPLACE: PLACEHOLDER_VIDEO_ID_1 with the latest video's YouTube ID -->
+                        <iframe id="latest-iframe"
+                            src="https://www.youtube.com/embed/PLACEHOLDER_VIDEO_ID_1?rel=0&amp;modestbranding=1"
+                            title="TBP — Latest video" loading="lazy" referrerpolicy="strict-origin-when-cross-origin"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                            allowfullscreen></iframe>
+                    </div>
+
+                    <div class="latest-info" id="latest-info">
+                        <span class="micro-label">Latest Video</span>
+                        <h2 class="latest-title" id="latest-title">Scorpio N Ownership Review — Is It Actually Practical
+                            For City Use?</h2>
+                        <p class="latest-desc">Our in-depth owner review of the Mahindra Scorpio N — real-world driving,
+                            city practicality, boot space, and everything in between.</p>
+                        <a href="https://www.youtube.com/@tbp-ag/videos" target="_blank" rel="noopener" id="latest-link"
+                            class="text-link">Watch on YouTube →</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==========================================================
+         4. YOUTUBE SECTION
+         ========================================================== -->
+        <section class="section" id="watch">
+            <div class="container">
+                <div class="section-head reveal" id="watch-head">
+                    <h2 class="section-title">Watch</h2>
+                    <hr class="head-rule">
+                </div>
+
+                <div class="watch-grid" id="watch-grid" data-stagger>
+
+                    <!-- REPLACE: PLACEHOLDER_VIDEO_ID_2 with featured video 1's YouTube ID -->
+                    <a class="video-card reveal" id="watch-card-1"
+                        href="https://www.youtube.com/watch?v=PLACEHOLDER_VIDEO_ID_2" target="_blank" rel="noopener"
+                        aria-label="Watch: Triumph Scrambler 400XC Review">
+                        <div class="video-thumb">
+                            <img loading="lazy" src="https://img.youtube.com/vi/PLACEHOLDER_VIDEO_ID_2/hqdefault.jpg"
+                                alt="Triumph Scrambler 400XC review thumbnail">
+                            <span class="duration-badge">16:39</span>
+                        </div>
+                        <div class="card-body">
+                            <h3 class="card-title">Triumph Scrambler 400XC Review — Versatile, But Is It Worth It?</h3>
+                            <p class="card-meta">80 views • 1 month ago</p>
+                        </div>
+                    </a>
+
+                    <!-- REPLACE: PLACEHOLDER_VIDEO_ID_3 with featured video 2's YouTube ID -->
+                    <a class="video-card reveal" id="watch-card-2"
+                        href="https://www.youtube.com/watch?v=PLACEHOLDER_VIDEO_ID_3" target="_blank" rel="noopener"
+                        aria-label="Watch: We Reviewed India's Most Hated Car">
+                        <div class="video-thumb">
+                            <img loading="lazy" src="https://img.youtube.com/vi/PLACEHOLDER_VIDEO_ID_3/hqdefault.jpg"
+                                alt="India's most hated car review thumbnail">
+                            <span class="duration-badge">32:18</span>
+                        </div>
+                        <div class="card-body">
+                            <h3 class="card-title">We Reviewed India's Most Hated Car!!</h3>
+                            <p class="card-meta">225 views • 1 month ago</p>
+                        </div>
+                    </a>
+
+                    <!-- REPLACE: PLACEHOLDER_VIDEO_ID_1 with the latest video's YouTube ID -->
+                    <a class="video-card reveal" id="watch-card-3"
+                        href="https://www.youtube.com/watch?v=PLACEHOLDER_VIDEO_ID_1" target="_blank" rel="noopener"
+                        aria-label="Watch: Scorpio N Ownership Review">
+                        <div class="video-thumb">
+                            <img loading="lazy" src="https://img.youtube.com/vi/PLACEHOLDER_VIDEO_ID_1/hqdefault.jpg"
+                                alt="Mahindra Scorpio N ownership review thumbnail">
+                            <span class="duration-badge">35:53</span>
+                        </div>
+                        <div class="card-body">
+                            <h3 class="card-title">Scorpio N Ownership Review — Is It Actually Practical For City Use?
+                            </h3>
+                            <p class="card-meta">841 views • 10 days ago</p>
+                        </div>
+                    </a>
+
+                </div>
+
+                <div class="center-cta">
+                    <a href="https://www.youtube.com/@tbp-ag/videos" target="_blank" rel="noopener" id="watch-see-all"
+                        class="btn btn-outline-red">See All Videos →</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==========================================================
+         5. PODCAST SECTION
+         ========================================================== -->
+        <section class="section listen" id="listen">
+            <div class="container">
+                <div class="section-head reveal" id="listen-head">
+                    <h2 class="section-title">Tech Buddies Podcast</h2>
+                    <hr class="head-rule head-rule--green">
+                </div>
+
+                <div class="listen-grid" id="listen-grid">
+
+                    <div class="spotify-wrap reveal" id="spotify-embed-wrap">
+                        <iframe id="spotify-iframe" title="Tech Buddies — Podcast on Spotify"
+                            src="https://open.spotify.com/embed/show/4W8ngOJrf2Sw7nZVWzZI4H?utm_source=generator&amp;theme=0"
+                            loading="lazy"
+                            allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe>
+                    </div>
+
+                    <!-- REPLACE: episode titles and dates below with real podcast episode data -->
+                    <div class="episodes-stack" id="episodes-stack" data-stagger>
+                        <a class="episode-card reveal" id="episode-1"
+                            href="https://open.spotify.com/show/4W8ngOJrf2Sw7nZVWzZI4H" target="_blank" rel="noopener"
+                            aria-label="Listen to Episode 1 on Spotify">
+                            <span class="ep-label">EP 01</span>
+                            <h3 class="ep-title">The EV Revolution in India — Are We Ready?</h3>
+                            <span class="ep-date">Sep 2026</span>
+                        </a>
+                        <a class="episode-card reveal" id="episode-2"
+                            href="https://open.spotify.com/show/4W8ngOJrf2Sw7nZVWzZI4H" target="_blank" rel="noopener"
+                            aria-label="Listen to Episode 2 on Spotify">
+                            <span class="ep-label">EP 02</span>
+                            <h3 class="ep-title">Budget Phones That Actually Beat Flagships</h3>
+                            <span class="ep-date">Aug 2026</span>
+                        </a>
+                        <a class="episode-card reveal" id="episode-3"
+                            href="https://open.spotify.com/show/4W8ngOJrf2Sw7nZVWzZI4H" target="_blank" rel="noopener"
+                            aria-label="Listen to Episode 3 on Spotify">
+                            <span class="ep-label">EP 03</span>
+                            <h3 class="ep-title">SUVs Under 15 Lakhs — Best Picks of 2026</h3>
+                            <span class="ep-date">Aug 2026</span>
+                        </a>
+                        <a class="episode-card reveal" id="episode-4"
+                            href="https://open.spotify.com/show/4W8ngOJrf2Sw7nZVWzZI4H" target="_blank" rel="noopener"
+                            aria-label="Listen to Episode 4 on Spotify">
+                            <span class="ep-label">EP 04</span>
+                            <h3 class="ep-title">Apple vs Android — An Indian Buyer's Take</h3>
+                            <span class="ep-date">Jul 2026</span>
+                        </a>
+                    </div>
+
+                </div>
+
+                <div class="podcast-ctas">
+                    <a href="https://open.spotify.com/show/4W8ngOJrf2Sw7nZVWzZI4H" target="_blank" rel="noopener"
+                        id="btn-spotify" class="btn btn-green">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                            <path
+                                d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z" />
+                        </svg>
+                        Listen on Spotify
+                    </a>
+                    <!-- REPLACE: https://podcasts.apple.com with the real Apple Podcasts show URL -->
+                    <a href="https://podcasts.apple.com/in/podcast/tech-buddies/id1563346201" target="_blank"
+                        rel="noopener" id="btn-apple" class="btn btn-outline">Listen on Apple Podcasts</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==========================================================
+         6. REVIEW FORM SECTION
+         ========================================================== -->
+        <section class="section" id="review">
+            <div class="container" data-stagger>
+
+                <div class="review-head reveal" id="review-head">
+                    <h2 class="review-title">
+                        <span class="review-line-1">WANT US TO</span>
+                        <span class="review-line-2">REVIEW YOUR CAR?</span>
+                    </h2>
+                    <p class="review-sub">Fill in the details below — if your car fits our next episode, we'll reach
+                        out.</p>
+                </div>
+
+                <!-- Email form submissions via FormSubmit -->
+                <form class="review-form reveal" id="review-form"
+                    action="https://formsubmit.co/gautamatharv2021@gmail.com" method="POST">
+                    <!-- FormSubmit configurations -->
+                    <input type="hidden" name="_subject" value="New Car Review Request for TBP!">
+                    <input type="hidden" name="_captcha" value="false">
+                    <input type="hidden" name="_next" value="https://tbp.vercel.app/">
+
+                    <div class="form-row">
+                        <div class="form-field">
+                            <label for="field-name">Full Name</label>
+                            <input type="text" id="field-name" name="name" placeholder="Your name"
+                                aria-label="Full Name" autocomplete="name" required>
+                        </div>
+                        <div class="form-field">
+                            <label for="field-phone">Phone Number</label>
+                            <input type="tel" id="field-phone" name="phone" placeholder="+91 98765 43210"
+                                aria-label="Phone Number" autocomplete="tel">
+                        </div>
+                    </div>
+
+                    <div class="form-field">
+                        <label for="field-email">Email Address</label>
+                        <input type="email" id="field-email" name="email" placeholder="you@example.com"
+                            aria-label="Email Address" autocomplete="email" required>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-field">
+                            <label for="field-brand">Vehicle Brand</label>
+                            <input type="text" id="field-brand" name="vehicle_brand" placeholder="e.g. Mahindra"
+                                aria-label="Vehicle Brand">
+                        </div>
+                        <div class="form-field">
+                            <label for="field-model">Model &amp; Year</label>
+                            <input type="text" id="field-model" name="vehicle_model" placeholder="e.g. XUV700 AX7, 2023"
+                                aria-label="Model and Year">
+                        </div>
+                    </div>
+
+                    <div class="form-field">
+                        <label for="field-message">About Your Car</label>
+                        <textarea id="field-message" name="message" rows="4" aria-label="Tell us about your car"
+                            placeholder="Tell us about your car — variant, odometer reading, or why you think we should review it"></textarea>
+                    </div>
+
+                    <p class="form-error" id="form-error" hidden>Something went wrong — please try again, or email us
+                        directly.</p>
+
+                    <button type="submit" id="review-submit" class="submit-btn">Submit My Car →</button>
+                </form>
+
+            </div>
+        </section>
+
+    </main>
+
+    <!-- ==========================================================
+       7. FOOTER
+       ========================================================== -->
+    <footer class="site-footer" id="footer">
+        <div class="footer-inner reveal" id="footer-inner">
+
+            <a href="#hero" id="footer-logo" class="wordmark wordmark-footer">Tbp</a>
+
+            <div class="social-row">
+                <a class="social-link" id="footer-youtube" href="https://www.youtube.com/@tbp-ag/videos" target="_blank"
+                    rel="noopener" aria-label="TBP on YouTube">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                        <path
+                            d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z" />
+                    </svg>
+                </a>
+                <a class="social-link" id="footer-spotify" href="https://open.spotify.com/show/4W8ngOJrf2Sw7nZVWzZI4H"
+                    target="_blank" rel="noopener" aria-label="Tech Buddies on Spotify">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                        <path
+                            d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z" />
+                    </svg>
+                </a>
+                <a class="social-link" id="footer-instagram" href="https://www.instagram.com/thebuyersperspective"
+                    target="_blank" rel="noopener" aria-label="TBP on Instagram">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                        <path
+                            d="M12 0C8.74 0 8.333.015 7.053.072 5.775.132 4.905.333 4.14.63c-.789.306-1.459.717-2.126 1.384S.935 3.35.63 4.14C.333 4.905.131 5.775.072 7.053.012 8.333 0 8.74 0 12s.015 3.667.072 4.947c.06 1.277.261 2.148.558 2.913.306.788.717 1.459 1.384 2.126.667.666 1.336 1.079 2.126 1.384.766.296 1.636.499 2.913.558C8.333 23.988 8.74 24 12 24s3.667-.015 4.947-.072c1.277-.06 2.148-.262 2.913-.558.788-.306 1.459-.718 2.126-1.384.666-.667 1.079-1.335 1.384-2.126.296-.765.499-1.636.558-2.913.06-1.28.072-1.687.072-4.947s-.015-3.667-.072-4.947c-.06-1.277-.262-2.149-.558-2.913-.306-.789-.718-1.459-1.384-2.126C21.319 1.347 20.651.935 19.86.63c-.765-.297-1.636-.499-2.913-.558C15.667.012 15.26 0 12 0zm0 2.16c3.203 0 3.585.016 4.85.071 1.17.055 1.805.249 2.227.415.562.217.96.477 1.382.896.419.42.679.819.896 1.381.164.422.36 1.057.413 2.227.057 1.266.07 1.646.07 4.85s-.015 3.585-.074 4.85c-.061 1.17-.256 1.805-.421 2.227-.224.562-.479.96-.899 1.382-.419.419-.824.679-1.38.896-.42.164-1.065.36-2.235.413-1.274.057-1.649.07-4.859.07-3.211 0-3.586-.015-4.859-.074-1.171-.061-1.816-.256-2.236-.421-.569-.224-.96-.479-1.379-.899-.421-.419-.69-.824-.9-1.38-.165-.42-.359-1.065-.42-2.235-.045-1.26-.061-1.649-.061-4.844 0-3.196.016-3.586.061-4.861.061-1.17.255-1.814.42-2.234.21-.57.479-.96.9-1.381.419-.419.81-.689 1.379-.898.42-.166 1.051-.361 2.221-.421 1.275-.045 1.65-.06 4.859-.06l.045.03zm0 3.678c-3.405 0-6.162 2.76-6.162 6.162 0 3.405 2.76 6.162 6.162 6.162 3.405 0 6.162-2.76 6.162-6.162 0-3.405-2.76-6.162-6.162-6.162zM12 16c-2.21 0-4-1.79-4-4s1.79-4 4-4 4 1.79 4 4-1.79 4-4 4zm7.846-10.405c0 .795-.646 1.44-1.44 1.44-.795 0-1.44-.646-1.44-1.44 0-.794.646-1.439 1.44-1.439.793-.001 1.44.645 1.44 1.439z" />
+                    </svg>
+                </a>
+                <!-- REPLACE: https://podcasts.apple.com with the real Apple Podcasts show URL -->
+                <a class="social-link" id="footer-apple" href="https://podcasts.apple.com" target="_blank"
+                    rel="noopener" aria-label="Tech Buddies on Apple Podcasts">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                        <circle cx="12" cy="12" r="10.2" stroke="currentColor" stroke-width="1.6" />
+                        <circle cx="12" cy="8.9" r="2.6" fill="currentColor" />
+                        <path fill="currentColor"
+                            d="M12 12.9c-1.45 0-2.4.95-2.2 2.2l.8 4.6c.13.75.68 1.2 1.4 1.2s1.27-.45 1.4-1.2l.8-4.6c.2-1.25-.75-2.2-2.2-2.2z" />
+                        <path stroke="currentColor" stroke-width="1.4" stroke-linecap="round"
+                            d="M5.7 15.1C4.8 12.9 4.9 10.4 6.6 8" />
+                        <path stroke="currentColor" stroke-width="1.4" stroke-linecap="round"
+                            d="M18.3 15.1c.9-2.2.8-4.7-.9-7.1" />
+                    </svg>
+                </a>
+                <!-- Email -->
+                <a href="mailto:gautamatharv2021@gmail.com" class="social-link" id="footer-email"
+                    aria-label="Email TBP">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+                        stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <rect x="2.5" y="5" width="19" height="14" rx="2.5" />
+                        <path d="m3.5 7 8.5 6 8.5-6" />
+                    </svg>
+                </a>
+            </div>
+
+            <p class="footer-tagline">Real reviews. Real buyers.</p>
+            <p class="footer-copy">© 2026 The Buyer's Perspective</p>
+
+        </div>
+    </footer>
+
+    <script>
+        (function () {
+            'use strict';
+
+            /* ------------------------------------------------------
+               Navbar: blur + tint once the page scrolls past 60px
+               ------------------------------------------------------ */
+            const nav = document.getElementById('site-nav');
+            const setNavState = () => nav.classList.toggle('scrolled', window.scrollY > 60);
+            window.addEventListener('scroll', setNavState, { passive: true });
+            setNavState();
+
+            /* ------------------------------------------------------
+               Mobile drawer (slide-in from right)
+               ------------------------------------------------------ */
+            const drawer = document.getElementById('mobile-drawer');
+            const overlay = document.getElementById('drawer-overlay');
+            const hamburger = document.getElementById('hamburger-btn');
+            const drawerClose = document.getElementById('drawer-close');
+
+            function openDrawer() {
+                drawer.classList.add('open');
+                overlay.classList.add('open');
+                hamburger.setAttribute('aria-expanded', 'true');
+                drawer.setAttribute('aria-hidden', 'false');
+                document.body.style.overflow = 'hidden'; /* lock background scroll */
+            }
+
+            function closeDrawer() {
+                drawer.classList.remove('open');
+                overlay.classList.remove('open');
+                hamburger.setAttribute('aria-expanded', 'false');
+                drawer.setAttribute('aria-hidden', 'true');
+                document.body.style.overflow = '';
+            }
+
+            hamburger.addEventListener('click', openDrawer);
+            drawerClose.addEventListener('click', closeDrawer);
+            overlay.addEventListener('click', closeDrawer);
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape' && drawer.classList.contains('open')) closeDrawer();
+            });
+            drawer.querySelectorAll('a').forEach((link) => link.addEventListener('click', closeDrawer));
+
+            /* ------------------------------------------------------
+               Scroll-triggered reveals (IntersectionObserver)
+               ------------------------------------------------------ */
+            const revealEls = Array.from(document.querySelectorAll('.reveal'));
+
+            // Stagger: 80ms per .reveal index within its [data-stagger] group
+            revealEls.forEach((el) => {
+                const group = el.closest('[data-stagger]');
+                if (!group) return;
+                const idx = Array.from(group.querySelectorAll('.reveal')).indexOf(el);
+                el.style.transitionDelay = idx * 80 + 'ms';
+            });
+
+            // Once the entrance finishes, hand transitions back to the component
+            // so hover states stay snappy and aren't affected by stagger delays.
+            function finishReveal(el) {
+                el.classList.add('revealed');
+                el.style.transitionDelay = '';
+            }
+
+            if ('IntersectionObserver' in window) {
+                const observer = new IntersectionObserver(
+                    (entries) => {
+                        entries.forEach((entry) => {
+                            if (!entry.isIntersecting) return;
+                            const el = entry.target;
+                            el.classList.add('visible');
+                            observer.unobserve(el);
+                            const delay = parseFloat(el.style.transitionDelay) || 0;
+                            window.setTimeout(() => finishReveal(el), delay + 650);
+                        });
+                    },
+                    { threshold: 0.12, rootMargin: '0px 0px -40px 0px' }
+                );
+                revealEls.forEach((el) => observer.observe(el));
+            } else {
+                // Fallback for very old browsers: show everything
+                revealEls.forEach((el) => { el.classList.add('visible'); finishReveal(el); });
+            }
+
+            /* ------------------------------------------------------
+               Review form — POST to Formspree via fetch,
+               swap the form for a success message on success.
+               ------------------------------------------------------ */
+            const form = document.getElementById('review-form');
+            const submitBtn = document.getElementById('review-submit');
+            const formError = document.getElementById('form-error');
+
+            form.addEventListener('submit', (e) => {
+                e.preventDefault();
+                formError.hidden = true;
+
+                const originalLabel = submitBtn.textContent;
+                submitBtn.disabled = true;
+                submitBtn.textContent = 'Submitting…';
+
+                fetch(form.action, {
+                    method: 'POST',
+                    body: new FormData(form),
+                    headers: { Accept: 'application/json' }
+                })
+                    .then((res) => {
+                        if (!res.ok) throw new Error('Submission failed');
+                        form.innerHTML = '<p class="form-success" id="form-success">Thanks! We\u2019ll be in touch.</p>';
+                    })
+                    .catch(() => {
+                        formError.hidden = false;
+                        submitBtn.disabled = false;
+                        submitBtn.textContent = originalLabel;
+                    });
+            });
+        })();
+    </script>
+</body>
+
+</html>
