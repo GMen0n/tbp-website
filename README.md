@@ -9,7 +9,7 @@ This project was designed with a "streetwear meets media brand" aesthetic, prior
 ## 🚀 Features
 
 * **Zero-Dependency Architecture:** Built with pure HTML, CSS, and Vanilla JavaScript. No frameworks, no build steps, just instant load times.
-* **Dynamic YouTube Integration:** Utilizes the YouTube RSS feed and a free RSS-to-JSON API to automatically fetch and display the channel's absolute newest video drop in the Hero section—requiring zero manual website updates when new content goes live.
+* **Dynamic Content Integration:** Utilizes YouTube and Anchor Podcast RSS feeds with a free RSS-to-JSON API to automatically fetch and display the absolute newest video drop and the latest 5 podcast episodes—requiring zero manual website updates when new content goes live.
 * **Serverless Contact Form:** Integrated with FormSubmit to handle "Review Your Car" requests seamlessly without needing a backend server.
 * **Responsive Design:** A custom CSS Grid/Flexbox layout with a mobile-first approach, including a smooth mobile drawer navigation and responsive video embed scaling.
 * **Performance Optimized:** Achieves near-perfect Lighthouse scores through system fonts, deferred off-screen loading, and optimized asset delivery.
