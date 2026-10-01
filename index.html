@@ -707,7 +707,7 @@
             border: 1px solid var(--border);
             transition: transform 0.2s ease, border-color 0.2s ease;
         }
-        
+
         .main-episode-card:hover {
             transform: translateY(-4px);
             border-color: var(--accent-green);
@@ -744,7 +744,7 @@
             -webkit-box-orient: vertical;
             overflow: hidden;
         }
-        
+
         .main-ep-meta {
             font-family: 'Space Grotesk', sans-serif;
             font-size: 12px;
@@ -1300,8 +1300,8 @@
                         <span class="micro-label">Latest Video</span>
                         <h2 class="latest-title" id="latest-title">Scorpio N Ownership Review — Is It Actually Practical
                             For City Use?</h2>
-                        <p class="latest-desc">Our in-depth owner review of the Mahindra Scorpio N — real-world driving,
-                            city practicality, boot space, and everything in between.</p>
+                        <p class="latest-desc">Our in depth review of the XUV7X0, real world driving, features and
+                            mileage. Find it here!</p>
                         <a href="https://www.youtube.com/@tbp-ag/videos" target="_blank" rel="noopener" id="latest-link"
                             class="text-link">Watch on YouTube →</a>
                     </div>
@@ -1710,11 +1710,11 @@
                 .then(data => {
                     if (data.status === 'ok' && data.items.length > 0) {
                         const episodes = data.items;
-                        
+
                         // 1. Update Main Episode (First Item)
                         const latest = episodes[0];
                         const mainWrap = document.getElementById('main-episode-wrap');
-                        
+
                         const dateObj = new Date(latest.pubDate);
                         const month = dateObj.toLocaleString('default', { month: 'short' });
                         const year = dateObj.getFullYear();
@@ -1723,7 +1723,7 @@
                         const tempDiv = document.createElement('div');
                         tempDiv.innerHTML = latest.description;
                         const textDesc = tempDiv.textContent || tempDiv.innerText || "";
-                        
+
                         if (mainWrap) {
                             mainWrap.innerHTML = `
                                 <a href="${latest.link}" target="_blank" rel="noopener" class="main-episode-card" aria-label="Listen to latest episode">
@@ -1747,7 +1747,7 @@
                                 const epMonth = epDateObj.toLocaleString('default', { month: 'short' });
                                 const epYear = epDateObj.getFullYear();
                                 const epDateStr = `${epMonth} ${epYear}`;
-                                
+
                                 stackHTML += `
                                     <a class="episode-card" href="${ep.link}" target="_blank" rel="noopener" aria-label="Listen to ${ep.title}">
                                         <span class="ep-label">EP 0${i}</span>
