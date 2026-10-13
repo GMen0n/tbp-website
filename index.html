@@ -7,6 +7,7 @@
     <title>TBP — The Buyer's Perspective</title>
     <meta name="description"
         content="India's honest auto and tech reviews. The buyer's take on cars, bikes and tech — YouTube channel and podcast by The Buyer's Perspective.">
+    <meta name="referrer" content="strict-origin-when-cross-origin">
 
     <link rel="icon" href="assets/TBPlogoHiRes.jpeg" type="image/jpeg">
 
@@ -1290,19 +1291,17 @@
                     <div class="latest-video" id="latest-video-wrap">
                         <!-- REPLACE: PLACEHOLDER_VIDEO_ID_1 with the latest video's YouTube ID -->
                         <iframe id="latest-iframe"
-                            src="https://www.youtube.com/embed/PLACEHOLDER_VIDEO_ID_1?rel=0&amp;modestbranding=1"
-                            title="TBP — Latest video" loading="lazy" referrerpolicy="strict-origin-when-cross-origin"
+                            src="https://www.youtube-nocookie.com/embed/Pql_FUxNGcg?rel=0&amp;modestbranding=1"
+                            title="TBP — Latest video" referrerpolicy="strict-origin-when-cross-origin"
                             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                             allowfullscreen></iframe>
                     </div>
 
                     <div class="latest-info" id="latest-info">
                         <span class="micro-label">Latest Video</span>
-                        <h2 class="latest-title" id="latest-title">Scorpio N Ownership Review — Is It Actually Practical
-                            For City Use?</h2>
-                        <p class="latest-desc">Our in depth review of the XUV7X0, real world driving, features and
-                            mileage. Find it here!</p>
-                        <a href="https://www.youtube.com/@tbp-ag/videos" target="_blank" rel="noopener" id="latest-link"
+                        <h2 class="latest-title" id="latest-title">New Kia Seltos HTX Ownership Review- Almost Perfect!!</h2>
+                        <p class="latest-desc" id="latest-desc">In this video we review the Kia Seltos Facelift. The Kia Seltos has been a gamechanger for Kia in India. It was the first car they launched in India and the Pre-Facelift model sold close to 5 lakh units. The facelift is also selling really well so we wanted to find out why?</p>
+                        <a href="https://www.youtube.com/watch?v=Pql_FUxNGcg" target="_blank" rel="noopener" id="latest-link"
                             class="text-link">Watch on YouTube →</a>
                     </div>
                 </div>
@@ -1669,33 +1668,61 @@
         document.addEventListener('DOMContentLoaded', () => {
             const CHANNEL_ID = 'UCOEVBFZ15jo2HAWnfej9eDw';
             const RSS_URL = `https://www.youtube.com/feeds/videos.xml?channel_id=${CHANNEL_ID}`;
-            const API_URL = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(RSS_URL)}`;
+            const RSS2JSON_URL = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(RSS_URL)}`;
 
-            fetch(API_URL)
-                .then(res => res.json())
+            function updateLatestDrop({ title, videoId, description }) {
+                const latestIframe = document.getElementById('latest-iframe');
+                const latestTitle = document.getElementById('latest-title');
+                const latestDesc = document.getElementById('latest-desc') || document.querySelector('.latest-desc');
+                const latestLink = document.getElementById('latest-link');
+
+                if (latestIframe && videoId) {
+                    const newSrc = `https://www.youtube-nocookie.com/embed/${videoId}?rel=0&modestbranding=1`;
+                    if (!latestIframe.src.includes(videoId)) {
+                        latestIframe.src = newSrc;
+                    }
+                }
+                if (latestTitle && title) {
+                    latestTitle.textContent = title;
+                }
+                if (latestDesc && description) {
+                    latestDesc.textContent = description;
+                }
+                if (latestLink && videoId) {
+                    latestLink.href = `https://www.youtube.com/watch?v=${videoId}`;
+                }
+            }
+
+            // 1. Primary: Fetch via serverless API which parses XML and extracts the first paragraph of description
+            fetch('/api/latest-video')
+                .then(res => {
+                    if (!res.ok) throw new Error(`API returned ${res.status}`);
+                    return res.json();
+                })
                 .then(data => {
-                    if (data.status === 'ok' && data.items.length > 0) {
-                        // Filter out shorts to keep main video formats
-                        const videos = data.items.filter(item => !item.title.toLowerCase().includes('#shorts'));
-
-                        if (videos.length > 0) {
-                            // 1. Update Latest Drop (Hero Video)
-                            const latest = videos[0];
-                            const latestId = latest.guid.split(':')[2];
-                            const latestIframe = document.getElementById('latest-iframe');
-                            const latestTitle = document.getElementById('latest-title');
-
-                            if (latestIframe) {
-                                latestIframe.src = `https://www.youtube.com/embed/${latestId}?rel=0&modestbranding=1`;
-                            }
-                            if (latestTitle) {
-                                latestTitle.textContent = latest.title;
-                            }
-
-                        }
+                    if (data && data.videoId) {
+                        updateLatestDrop(data);
                     }
                 })
-                .catch(err => console.error('Error fetching YouTube RSS:', err));
+                .catch(() => {
+                    // 2. Fallback: RSS2JSON if serverless function is unavailable
+                    fetch(RSS2JSON_URL)
+                        .then(res => res.json())
+                        .then(data => {
+                            if (data.status === 'ok' && data.items.length > 0) {
+                                const videos = data.items.filter(item => !item.title.toLowerCase().includes('#shorts'));
+                                if (videos.length > 0) {
+                                    const latest = videos[0];
+                                    const latestId = latest.guid ? latest.guid.split(':')[2] : '';
+                                    updateLatestDrop({
+                                        title: latest.title,
+                                        videoId: latestId
+                                    });
+                                }
+                            }
+                        })
+                        .catch(err => console.error('Error fetching YouTube RSS:', err));
+                });
         });
     </script>
 
